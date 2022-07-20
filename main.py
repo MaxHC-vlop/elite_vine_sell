@@ -1,7 +1,8 @@
 import pandas
-
+from collections import defaultdict
 from datetime import datetime
 from http.server import HTTPServer, SimpleHTTPRequestHandler
+from pprint import pprint
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
@@ -28,8 +29,20 @@ def get_year():
 
 
 def new_name():
-    excel_data_df = pandas.read_excel('wine.xlsx')
-    wine_dict = excel_data_df.to_dict()
+    excel_data_df = pandas.read_excel('wine2.xlsx', keep_default_na=False)
+    wine_dict = excel_data_df.to_dict(into=dict)
+
+    vine_card = defaultdict(list)
+
+    for vine in wine_dict:
+        print(vine)
+        asdfa = wine_dict['Категория']
+        print(asdfa)
+        print(vine_card)
+        vine_card[asdfa].append(vine)
+    
+
+    return vine_card
 
 
 def make_template():
@@ -38,23 +51,11 @@ def make_template():
         autoescape=select_autoescape(['html', 'xml'])
     )
     template = env.get_template('template.html')
-    excel_data_df = pandas.read_excel('wine.xlsx')
-    wine_dict = excel_data_df.to_dict()
 
-    new_dict = []
-    for i in range(6):
-        img = wine_dict['Картинка'][i]
-        src = './images/'
-        x = {
-            'image': f'{src}{img}',
-            'title': wine_dict['Название'][i],
-            'sort': wine_dict['Сорт'][i],
-            'price': wine_dict['Цена'][i],
-        }
-        new_dict += [x]
-    print(new_dict)
+    www = new_name()
+
     rendered_page = template.render(
-        new_dict = new_dict,
+        new_dict = new_name(),
         old_wine = get_year()
     )
     with open('index.html', 'w', encoding="utf8") as file:
