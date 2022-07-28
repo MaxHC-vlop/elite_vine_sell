@@ -1,8 +1,8 @@
+from pprint import pprint
 import pandas
 from collections import defaultdict
 from datetime import datetime
 from http.server import HTTPServer, SimpleHTTPRequestHandler
-from pprint import pprint
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
@@ -29,20 +29,19 @@ def get_year():
 
 
 def new_name():
-    excel_data_df = pandas.read_excel('wine2.xlsx', keep_default_na=False)
-    wine_dict = excel_data_df.to_dict(into=dict)
-
+    excel_data_df = pandas.read_excel(
+        'wine2.xlsx',
+        keep_default_na=False,
+        )
+    wine_dict = excel_data_df.to_dict('records')
     vine_card = defaultdict(list)
-
     for vine in wine_dict:
-        print(vine)
-        asdfa = wine_dict['Категория']
-        print(asdfa)
-        print(vine_card)
+        asdfa = vine['Категория']
         vine_card[asdfa].append(vine)
-    
 
-    return vine_card
+    sortedq = {key: value for key, value in sorted(vine_card.items())}
+
+    return sortedq
 
 
 def make_template():

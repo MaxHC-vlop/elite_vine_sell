@@ -113,21 +113,27 @@
             </p>
           </div>
         </div>
-        {% for one in new_dict %}
+        {% for one, two in new_dict.items() %}
+        <div class="col-12 section-title text-center mb-5">
+          <h2 class="d-block">{{one}}</h2>
+        </div>
         <div class="row">
+          {% for qwe in two %}
           <div class="col-lg-4 mb-5 col-md-6">
             <div class="wine_v_1 text-center pb-4 pt-5">
-              <img src="{{one}}" alt="Image" class="img-fluid">
-              <h2>{{new_dict.one}}</h2>
+              <img src="images/{{qwe['Картинка']}}" alt="Image" class="img-fluid">
               <div>
-                <h3 class="heading mt-3 mb-3 text-dark">{{one}}</h3>
+                <h3 class="heading mt-3 mb-3 text-dark">{{qwe['Название']}}</h3>
                 <p>
-                  {{one}}<br/>
-                  <span class="price">{{one}} р.</span>
+                  {% if qwe['Сорт'] %}
+                  Сорт винограда - {{qwe['Сорт']}}<br/>
+                  {% endif %}
+                  <span class="price">{{qwe['Цена']}} р.</span>
                 </p>
               </div>
             </div>
           </div>
+          {% endfor %}
         </div>
         {% endfor %}
       </div>
