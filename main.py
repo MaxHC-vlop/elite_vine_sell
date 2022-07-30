@@ -30,7 +30,7 @@ def get_year():
 
 def new_name():
     excel_data_df = pandas.read_excel(
-        'wine2.xlsx',
+        'wine3.xlsx',
         keep_default_na=False,
         )
     wine_dict = excel_data_df.to_dict('records')
