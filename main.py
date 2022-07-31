@@ -1,12 +1,11 @@
-from pprint import pprint
-import pandas
 from collections import defaultdict
 from datetime import datetime
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
+import pandas
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-
+NAME_FILE = 'wine3.xlsx'
 CREATE_YEAR = 1920
 
 
@@ -50,8 +49,6 @@ def make_template():
         autoescape=select_autoescape(['html', 'xml'])
     )
     template = env.get_template('template.html')
-
-    www = new_name()
 
     rendered_page = template.render(
         new_dict = new_name(),
